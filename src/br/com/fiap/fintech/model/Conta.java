@@ -1,36 +1,63 @@
 package br.com.fiap.fintech.model;
 
 public abstract class Conta {
-    private String numero;
-    private Cliente titular;
+    private int numero;
+    private String agencia;
     private double saldo;
 
-    public Conta(String numero, Cliente titular) {
+    // Construtor
+    public Conta(int numero, String agencia, double saldo) {
         this.numero = numero;
-        this.titular = titular;
-        this.saldo = 0.0;
+        this.agencia = agencia;
+        this.saldo = saldo;
     }
 
+    // Métodos
     public void depositar(double valor) {
-        if (valor <= 0) throw new IllegalArgumentException("Valor de depósito inválido");
-        saldo += valor;
+        if (valor > 0) {
+            saldo += valor;
+        }
     }
 
     public boolean sacar(double valor) {
-        if (valor <= 0 || valor > saldo) return false;
-        saldo -= valor;
-        return true;
-    }
-
-    public boolean transferir(double valor, Conta destino) {
-        if (this.sacar(valor)) {
-            destino.depositar(valor);
+        if (valor > 0 && valor <= saldo) {
+            saldo -= valor;
             return true;
         }
         return false;
     }
 
-    public String getNumero() { return numero; }
-    public Cliente getTitular() { return titular; }
-    public double getSaldo() { return saldo; }
+    // Getters e Setters
+    public int getNumero() {
+        return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+
+    public String getAgencia() {
+        return agencia;
+    }
+
+    public void setAgencia(String agencia) {
+        this.agencia = agencia;
+    }
+
+    public double getSaldo() {
+        return saldo;
+    }
+
+    protected void setSaldo(double saldo) {
+        this.saldo = saldo;
+    }
+
+    @Override
+    public String toString() {
+        return "Conta{" +
+                "numero=" + numero +
+                ", agencia='" + agencia + '\'' +
+                ", saldo=" + saldo +
+                '}';
+    }
 }

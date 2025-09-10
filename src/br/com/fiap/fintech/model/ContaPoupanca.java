@@ -1,18 +1,36 @@
 package br.com.fiap.fintech.model;
 
 public class ContaPoupanca extends Conta {
-    private double rendimentoMensal; // ex: 0.01 = 1% a.m.
+    private double taxaRendimento;
 
-    public ContaPoupanca(String numero, Cliente titular, double rendimentoMensal) {
-        super(numero, titular);
-        this.rendimentoMensal = rendimentoMensal;
+    // Construtor
+    public ContaPoupanca(int numero, String agencia, double saldo, double taxaRendimento) {
+        super(numero, agencia, saldo);
+        this.taxaRendimento = taxaRendimento;
     }
 
+    // Método específico da poupança
     public void aplicarRendimento() {
-        double ganho = getSaldo() * rendimentoMensal;
-        if (ganho > 0) depositar(ganho);
+        double rendimento = getSaldo() * taxaRendimento;
+        depositar(rendimento);
     }
 
-    public double getRendimentoMensal() { return rendimentoMensal; }
-    public void setRendimentoMensal(double rendimentoMensal) { this.rendimentoMensal = rendimentoMensal; }
+    // Getters e Setters
+    public double getTaxaRendimento() {
+        return taxaRendimento;
+    }
+
+    public void setTaxaRendimento(double taxaRendimento) {
+        this.taxaRendimento = taxaRendimento;
+    }
+
+    @Override
+    public String toString() {
+        return "ContaPoupanca{" +
+                "numero=" + getNumero() +
+                ", agencia='" + getAgencia() + '\'' +
+                ", saldo=" + getSaldo() +
+                ", taxaRendimento=" + taxaRendimento +
+                '}';
+    }
 }

@@ -1,22 +1,41 @@
 package br.com.fiap.fintech.teste;
 
-import br.com.fiap.fintech.model.*;
+import br.com.fiap.fintech.model.Cliente;
+import br.com.fiap.fintech.model.ContaCorrente;
 
 public class Teste {
     public static void main(String[] args) {
-        Cliente joao = new Cliente("João Silva", "123.456.789-00", "joao@exemplo.com");
-        ContaCorrente cc = new ContaCorrente("0001-1", joao, 19.90);
+        // Criando um cliente
+        Cliente cliente = new Cliente(
+                "João Silva",
+                "123.456.789-00",
+                "joao.silva@email.com",
+                "(11) 99999-8888",
+                "Rua das Flores, 123"
+        );
 
-        cc.depositar(1000);
-        cc.cobrarTarifa();
+        // Criando uma conta corrente
+        ContaCorrente conta = new ContaCorrente(
+                1001,
+                "0001",
+                1500.0,
+                500.0
+        );
 
-        Cliente maria = new Cliente("Maria Souza", "987.654.321-00", "maria@exemplo.com");
-        ContaPoupanca cp = new ContaPoupanca("0002-5", maria, 0.01);
+        // Operações na conta
+        System.out.println("Saldo inicial: " + conta.getSaldo());
+        conta.depositar(200.0);
+        System.out.println("Após depósito de 200: " + conta.getSaldo());
 
-        cc.transferir(200, cp);
-        cp.aplicarRendimento();
+        boolean saqueOk = conta.sacar(1800.0);
+        System.out.println("Tentativa de saque de 1800: " + (saqueOk ? "Realizado" : "Saldo insuficiente"));
+        System.out.println("Saldo final: " + conta.getSaldo());
 
-        System.out.printf("Saldo CC (%s): R$ %.2f%n", cc.getTitular().getNome(), cc.getSaldo());
-        System.out.printf("Saldo CP (%s): R$ %.2f%n", cp.getTitular().getNome(), cp.getSaldo());
+        // Exibindo os dados
+        System.out.println("\n=== Cliente ===");
+        System.out.println(cliente);
+
+        System.out.println("\n=== Conta Corrente ===");
+        System.out.println(conta);
     }
 }

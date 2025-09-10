@@ -1,18 +1,40 @@
 package br.com.fiap.fintech.model;
 
 public class ContaCorrente extends Conta {
-    private double tarifaMensal;
+    private double limiteChequeEspecial;
 
-    public ContaCorrente(String numero, Cliente titular, double tarifaMensal) {
-        super(numero, titular);
-        this.tarifaMensal = tarifaMensal;
+    // Construtor
+    public ContaCorrente(int numero, String agencia, double saldo, double limiteChequeEspecial) {
+        super(numero, agencia, saldo);
+        this.limiteChequeEspecial = limiteChequeEspecial;
     }
 
-    public void cobrarTarifa() {
-        // tenta debitar a tarifa; se não houver saldo suficiente, apenas ignora
-        sacar(tarifaMensal);
+    // Sobrescrevendo método sacar
+    @Override
+    public boolean sacar(double valor) {
+        if (valor > 0 && valor <= (getSaldo() + limiteChequeEspecial)) {
+            setSaldo(getSaldo() - valor);
+            return true;
+        }
+        return false;
     }
 
-    public double getTarifaMensal() { return tarifaMensal; }
-    public void setTarifaMensal(double tarifaMensal) { this.tarifaMensal = tarifaMensal; }
+    // Getters e Setters
+    public double getLimiteChequeEspecial() {
+        return limiteChequeEspecial;
+    }
+
+    public void setLimiteChequeEspecial(double limiteChequeEspecial) {
+        this.limiteChequeEspecial = limiteChequeEspecial;
+    }
+
+    @Override
+    public String toString() {
+        return "ContaCorrente{" +
+                "numero=" + getNumero() +
+                ", agencia='" + getAgencia() + '\'' +
+                ", saldo=" + getSaldo() +
+                ", limiteChequeEspecial=" + limiteChequeEspecial +
+                '}';
+    }
 }
